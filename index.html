@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUANTUM NETWORK | Ultimate Minecraft Server</title>
+    <!-- 10. Design/UX: SEO Optimized -->
+    <meta name="description"
+        content="Quantum Network is the ultimate Minecraft server featuring Survival, Skyblock, and Chaos Lifesteal. Multilingual support. Join thousands of players today!">
+
+    <!-- 10. Minecraft Style Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- 11. Security: HTTPS/SSL (Implicit via host), PWA ready (Manifest placeholder) -->
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <!-- Custom Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <img src="tex-grass.png" alt="Loading..." class="spinning-block">
+        <div class="xp-bar-container">
+            <div class="xp-bar-fill" id="xp-bar-fill"></div>
+        </div>
+        <div class="loading-text">Loading Antigravity World...</div>
+    </div>
+
+    <div id="particles-js"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/8662/8662135.png" alt="Logo" class="nav-logo-img">
+            QUANTUM
+        </div>
+
+        <button class="mobile-menu-toggle" id="mobileMenuBtn">☰</button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#store">Store</a></li>
+            <li><a href="#leaderboards">Leaderstats</a></li>
+            <li><a href="#bans">Bans</a></li>
+            <li><a href="#wiki">Wiki</a></li>
+            <li class="dropdown">
+                <a href="#more" class="dropbtn">More ▼</a>
+                <div class="dropdown-content">
+                    <a href="#staff">Staff</a>
+                    <a href="#rules">Rules</a>
+                    <a href="#news">News</a>
+                    <a href="#events">Events</a>
+                    <a href="#media">Media</a>
+                    <a href="#map">Live Map</a>
+                </div>
+            </li>
+            <li id="guest-nav"><a href="#" class="auth-btn" id="navLoginBtn"><i class="fas fa-sign-in-alt"></i> PLAYER
+                    PANEL</a></li>
+            <li id="user-nav" style="display: none; align-items: center; gap: 15px;">
+                <span id="userEmailDisplay" class="cyan-text" style="font-weight: bold; text-transform: none;"></span>
+                <a href="#" class="mc-btn red-btn logout-btn" id="navLogoutBtn"
+                    style="padding: 6px 14px; font-size: 0.9rem; border-width: 2px;"><i class="fas fa-sign-out-alt"></i>
+                    LOGOUT</a>
+            </li>
+        </ul>
+
+        <!-- 2. Multilingual Support -->
+        <div class="lang-selector">
+            <span>🌐</span>
+            <select id="langSelect">
+                <option value="en">EN</option>
+                <option value="mk">MK</option>
+                <option value="sr">SR</option>
+            </select>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Video Placeholder -->
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-content">
+            <div class="version-badge">VERSION 1.20.X - 1.21</div>
+            <h1 class="mc-title">QUANTUM<br><span class="cyan-text">NETWORK</span></h1>
+
+            <div class="mc-dark-panel live-stats glowing-border">
+                <span class="pulse-dot">🟢</span>
+                <span class="shadow-text" id="onlinePlayers">1,540 PLAYERS ONLINE</span>
+            </div>
+
+            <div class="mc-dark-panel ip-widget hover-scale" id="ipWidget" onclick="copyIP()">
+                <span class="ip-text shadow-text" id="ipText">PLAY.QUANTUM.COM</span>
+                <span class="copy-hint" id="copyHint">CLICK TO COPY IP</span>
+            </div>
+
+            <div class="hero-buttons">
+                <a href="#store" class="mc-btn primary">🛒 STORE</a>
+                <a href="#discord" class="mc-btn discord-btn"><i class="fab fa-discord"></i> DISCORD</a>
+            </div>
+
+            <div class="scroll-indicator">
+                <span>SCROLL DOWN</span>
+                <div class="arrow">↓</div>
+            </div>
+        </div>
+        <div class="mc-dark-panel toast" id="toast">COPIED TO CLIPBOARD!</div>
+    </section>
+
+    <!-- 2. About Server -->
+    <section class="about" id="about">
+        <h2 class="section-title">ABOUT <span class="purple-text">QUANTUM</span></h2>
+        <div class="about-grid">
+            <div class="mc-panel about-text scroll-animate">
+                <h3>SERVER HISTORY</h3>
+                <p>Founded in 2026, Quantum Network is an ultra-premium Minecraft experience. We started as a small
+                    survival community and evolved into the ultimate network hosting thousands of daily players. Enjoy
+                    custom mechanics, zero lag, and a toxic-free environment.</p>
+                <h3 style="margin-top:20px;">GAMEMODES</h3>
+                <div class="badges">
+                    <span class="mc-badge survival">Survival</span>
+                    <span class="mc-badge skyblock">SkyBlock</span>
+                    <span class="mc-badge factions">Factions</span>
+                    <span class="mc-badge pvp">PvP</span>
+                    <span class="mc-badge lifesteal">Lifesteal</span>
+                    <span class="mc-badge roleplay">Roleplay</span>
+                </div>
+            </div>
+            <!-- 18. Media Gallery / Screenshots / Video -->
+            <div class="mc-panel about-media scroll-animate">
+                <div class="video-container">
+                    <iframe width="100%" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        title="Server Trailer" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Store / Ranks & 17. Season Pass -->
+    <section class="store" id="store">
+        <h2 class="section-title">SERVER <span class="gold-text">STORE</span></h2>
+        <p class="section-subtitle">Auto-syncs instantly with the Minecraft server</p>
+
+        <div class="pricing-table">
+            <!-- VIP -->
+            <div class="mc-panel price-card scroll-animate">
+                <h3>VIP RANK</h3>
+                <div class="price">$9.99<span style="font-size:0.5em;color:#aaa;">/lifetime</span></div>
+                <div class="perks">
+                    <ul>
+                        <li><i class="fas fa-check text-green"></i> Priority Queue</li>
+                        <li><i class="fas fa-check text-green"></i> Yellow Chat Prefix</li>
+                        <li><i class="fas fa-check text-green"></i> 3 /sethome</li>
+                        <li><i class="fas fa-check text-green"></i> Kit VIP</li>
+                    </ul>
+                </div>
+                <button class="mc-btn">PURCHASE (PayPal/Card)</button>
+            </div>
+
+            <!-- MVP (Most Popular) -->
+            <div class="mc-panel price-card popular-card scroll-animate">
+                <div class="popular-badge">BEST VALUE</div>
+                <h3 class="cyan-text shadow-text" style="font-size:2.2rem;">MVP RANK</h3>
+                <div class="price">$19.99<span style="font-size:0.5em;color:#aaa;">/lifetime</span></div>
+                <div class="perks">
+                    <ul>
+                        <li><i class="fas fa-check text-green"></i> High Priority Queue</li>
+                        <li><i class="fas fa-check text-green"></i> Aqua Chat Prefix</li>
+                        <li><i class="fas fa-check text-green"></i> 10 /sethome</li>
+                        <li><i class="fas fa-check text-green"></i> Custom Nickname</li>
+                        <li><i class="fas fa-check text-green"></i> Fly in Hub</li>
+                    </ul>
+                </div>
+                <button class="mc-btn primary">PURCHASE (PayPal/Card)</button>
+            </div>
+
+            <!-- Elite -->
+            <div class="mc-panel price-card scroll-animate">
+                <h3>ELITE RANK</h3>
+                <div class="price">$39.99<span style="font-size:0.5em;color:#aaa;">/lifetime</span></div>
+                <div class="perks">
+                    <ul>
+                        <li><i class="fas fa-check text-green"></i> Queue Bypass</li>
+                        <li><i class="fas fa-check text-green"></i> Custom Hex Colors</li>
+                        <li><i class="fas fa-check text-green"></i> Unlimited /sethome</li>
+                        <li><i class="fas fa-check text-green"></i> Access to /repair all</li>
+                    </ul>
+                </div>
+                <button class="mc-btn">PURCHASE (PayPal/Card)</button>
+            </div>
+        </div>
+
+        </div>
+    </section>
+    </section>
+
+    <!-- 7. Leaderboards & 9. Vote System -->
+    <section class="stats-vote-wrapper" id="leaderboards">
+        <h2 class="section-title">TOP <span class="cyan-text">PLAYERS</span></h2>
+        <div class="grid-container-2">
+            <div class="mc-panel table-container scroll-animate">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab('kills')">Kills</button>
+                    <button class="tab-btn" onclick="openTab('rich')">Richest</button>
+                    <button class="tab-btn" onclick="openTab('playtime')">Playtime</button>
+                </div>
+
+                <table class="data-table" id="kills-data">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>PLAYER</th>
+                            <th>KILLS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="gold-text">#1</td>
+                            <td><img src="https://crafatar.com/avatars/853c80ef3c3749fdaa49938b674adae6?size=24"
+                                    class="inline-head"> GHOSTSLAYER</td>
+                            <td>4,208</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#FFF;">#2</td>
+                            <td><img src="https://crafatar.com/avatars/069a79f444e94726a5befca90e38aaf5?size=24"
+                                    class="inline-head"> VOIDWALKER</td>
+                            <td>3,842</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#FFAA00;">#3</td>
+                            <td><img src="https://crafatar.com/avatars/1b2b810d7a0c4f80879685a3aa460341?size=24"
+                                    class="inline-head"> ENDERKING_</td>
+                            <td>2,105</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Vote System -->
+            <div class="mc-panel vote-panel scroll-animate" id="vote">
+                <h3>VOTE & REWARDS 🎁</h3>
+                <p>Support the server and get daily rewards, crate keys, and cash!</p>
+                <div class="vote-links">
+                    <a href="#" class="mc-btn vote-btn">Vote Site #1 (Daily Key)</a>
+                    <a href="#" class="mc-btn vote-btn">Vote Site #2 ($10k Cash)</a>
+                    <a href="#" class="mc-btn vote-btn">Vote Site #3 (100 EXP)</a>
+                </div>
+                <div class="top-voter">
+                    <span>🏆 Top Voter this month:</span>
+                    <b class="gold-text">SteveMaster (120 Votes)</b>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Staff Team -->
+    <section class="staff" id="staff">
+        <h2 class="section-title">MEET THE <span class="red-text">STAFF</span></h2>
+        <div class="staff-grid">
+            <div class="mc-panel staff-card scroll-animate owner">
+                <img src="https://crafatar.com/renders/body/f1727783be314d3fbdffc5058fd0e84b?overlay" class="staff-body"
+                    alt="Owner">
+                <h3 class="red-text shadow-text">OWNAGE</h3>
+                <div class="staff-role">OWNER / DEV</div>
+                <div class="staff-discord"><i class="fab fa-discord"></i> Ownage#0001</div>
+            </div>
+            <div class="mc-panel staff-card scroll-animate admin">
+                <img src="https://crafatar.com/renders/body/98b1d981bf484bd794c489c470876176?overlay" class="staff-body"
+                    alt="Admin">
+                <h3 class="gold-text shadow-text">ZEUS</h3>
+                <div class="staff-role">HEAD ADMIN</div>
+                <div class="staff-discord"><i class="fab fa-discord"></i> Zeus#1337</div>
+            </div>
+            <div class="mc-panel staff-card scroll-animate mod">
+                <img src="https://crafatar.com/renders/body/b876ec32e396476ba1158438d83c67d4?overlay" class="staff-body"
+                    alt="Mod">
+                <h3 class="purple-text shadow-text">ATHENA</h3>
+                <div class="staff-role">MODERATOR</div>
+                <div class="staff-discord"><i class="fab fa-discord"></i> Athena_xx</div>
+            </div>
+            <div class="mc-panel staff-card scroll-animate helper">
+                <img src="https://crafatar.com/renders/body/2237894377bb4ced94e82bd47e09ef2e?overlay" class="staff-body"
+                    alt="Helper">
+                <h3 class="cyan-text shadow-text">ARES</h3>
+                <div class="staff-role">HELPER</div>
+                <div class="staff-discord"><i class="fab fa-discord"></i> AresBoy</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. News / Blog & 15. Events -->
+    <section class="news-events" id="news">
+        <div class="grid-container-2">
+            <!-- News -->
+            <div class="news-col">
+                <h2 class="section-title" style="text-align:left;">LATEST <span class="green-text">NEWS</span></h2>
+                <div class="mc-panel news-card scroll-animate">
+                    <div class="news-date">MAR 5, 2026</div>
+                    <h3>🔥 LIFESTEAL SEASON 5 RESET</h3>
+                    <p>The highly anticipated Season 5 of Lifesteal is here! Featuring new custom enchants, a massive
+                        world border expansion, and fixed duping bugs.</p>
+                    <a href="#" class="read-more">Read Patch Notes ➔</a>
+                </div>
+                <div class="mc-panel news-card scroll-animate" style="margin-top:20px;">
+                    <div class="news-date">FEB 28, 2026</div>
+                    <h3>🛠️ NETWORK MAINTENANCE</h3>
+                    <p>We are upgrading our anti-DDoS hardware to ensure zero downtime. Expected downtime: 30 minutes.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Events -->
+            <div class="events-col" id="events">
+                <h2 class="section-title" style="text-align:left;">UPCOMING <span class="gold-text">EVENTS</span></h2>
+                <div class="mc-panel event-card scroll-animate">
+                    <h3>⚔️ 1v1 PvP Tournament</h3>
+                    <div class="event-timer" id="countdown-pvp">12h 45m 30s</div>
+                    <p>Prize pool: $50 Store Credit & "Champion" Tag</p>
+                </div>
+                <div class="mc-panel event-card scroll-animate" style="margin-top:20px;">
+                    <h3>🏰 Build Competition: Castle</h3>
+                    <div class="event-timer" id="countdown-build">3d 10h 00m</div>
+                    <p>Prize pool: MVP Rank & 1,000,000 in-game balance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Discord Widget & 12. Dynmap -->
+    <section class="integrations" id="discord">
+        <div class="grid-container-2">
+            <div class="mc-panel discord-wrapper scroll-animate">
+                <h3 style="color:#5865F2;"><i class="fab fa-discord"></i> LIVE DISCORD CHAT</h3>
+                <!-- Discord Widget Mockup -->
+                <iframe src="https://discord.com/widget?id=804365738600857640&theme=dark" width="100%" height="400"
+                    allowtransparency="true" frameborder="0"
+                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            </div>
+            <div class="mc-panel map-wrapper scroll-animate" id="map">
+                <h3>🗺️ LIVE DYNMAP</h3>
+                <!-- Dynmap Iframe Placeholder -->
+                <div class="dynmap-placeholder">
+                    <img src="https://www.minecraft-hosting.pro/images/dynmap_1.jpg" alt="Dynmap"
+                        style="width:100%; height:350px; object-fit:cover; border-radius:4px; opacity: 0.7;">
+                    <button class="mc-btn map-btn">OPEN FULL MAP</button>
+                    <div class="map-stats"><i class="fas fa-users"></i> 45 Players on Map</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Rules & 14. Bans & 19. Wiki -->
+    <section class="info-hub" id="rules">
+        <h2 class="section-title">INFORMATION <span class="cyan-text">HUB</span></h2>
+        <div class="grid-container-3">
+            <!-- Rules -->
+            <div class="mc-panel info-card scroll-animate">
+                <h3>📜 SERVER RULES</h3>
+                <ul>
+                    <li>1. No Hacking / Anti-Cheat Active</li>
+                    <li>2. No Exploiting/Duping (<span class="red-text">Ban</span>)</li>
+                    <li>3. No Toxicity or Racism</li>
+                    <li>4. No Spam or Advertising</li>
+                    <li>5. Staff decisions are final.</li>
+                </ul>
+            </div>
+
+            <!-- Bans & Appeals -->
+            <div class="mc-panel info-card scroll-animate" id="bans">
+                <h3>⚖️ BANS & APPEALS</h3>
+                <p>Check the public ban list or appeal a false ban. All punishments are publicly tracked.</p>
+                <div style="margin-top:20px; display:flex; gap:10px; flex-direction:column;">
+                    <button class="mc-btn red-btn">VIEW BAN LIST</button>
+                    <button class="mc-btn">SUBMIT APPEAL</button>
+                    <button class="mc-btn" style="background:#555;">REPORT PLAYER</button>
+                </div>
+            </div>
+
+            <!-- Wiki / Guide -->
+            <div class="mc-panel info-card scroll-animate" id="wiki">
+                <h3>📚 WIKI & GUIDES</h3>
+                <p>Learn how to play, view custom commands, and read economy tips.</p>
+                <div class="wiki-links">
+                    <a href="#">➔ Beginner Starter Guide</a>
+                    <a href="#">➔ Lifesteal Mechanics</a>
+                    <a href="#">➔ Economy Prices & Tips</a>
+                    <a href="#">➔ List of Commands</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 21. Live API Stats & 22. PRO Features -->
+    <section class="server-tech" id="features">
+        <h2 class="section-title">SYSTEM <span class="green-text">METRICS</span></h2>
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <i class="fas fa-heartbeat"></i>
+                <div class="metric-val text-green">20.0 TPS</div>
+                <div class="metric-label">Server Health</div>
+            </div>
+            <div class="metric-box">
+                <i class="fas fa-shield-alt"></i>
+                <div class="metric-val cyan-text">ONLINE</div>
+                <div class="metric-label">Anti-Cheat Engine</div>
+            </div>
+            <div class="metric-box">
+                <i class="fas fa-server"></i>
+                <div class="metric-val">12ms</div>
+                <div class="metric-label">Avg. Ping (EU)</div>
+            </div>
+            <div class="metric-box">
+                <i class="fas fa-network-wired"></i>
+                <div class="metric-val gold-text">ACTIVE</div>
+                <div class="metric-label">Anti-DDoS Pro</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Analytics -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="brand">
+                <h2 class="shadow-text">QUANTUM NETWORK</h2>
+                <p>The ultimate Minecraft multiplayer experience. PWA ready, SEO optimized.</p>
+                <div class="socials mt-10">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>QUICK LINKS</h4>
+                <a href="#home">Home</a><br>
+                <a href="#store">Store & Terms</a><br>
+                <a href="#rules">Rules & Privacy</a><br>
+                <a href="#">Forum (PRO Feature)</a>
+            </div>
+            <div class="footer-links">
+                <!-- 20. Analytics Placeholder -->
+                <h4>LIVE ANALYTICS</h4>
+                <div class="analytics-txt">👁️ Visitors Today: <span class="cyan-text">12,402</span></div>
+                <div class="analytics-txt">🌍 Top Region: <span class="gold-text">EU / NA</span></div>
+            </div>
+        </div>
+        <div class="disclaimer">
+            <p>NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.</p>
+            <p>&copy; 2026 QUANTUM NETWORK. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <!-- 13. Player Panel Modal & 11. Security Captcha UI -->
+    <div class="modal-overlay" id="authModal">
+        <div class="mc-dark-panel auth-modal">
+            <span class="close-modal" id="closeModal">×</span>
+            <div class="modal-header">
+                <img src="https://cdn-icons-png.flaticon.com/512/8662/8662135.png" style="width:40px;">
+                <h3 style="color:var(--cyan); margin:0;">PLAYER PANEL</h3>
+            </div>
+            <p style="text-align:center; color:#ccc;font-size:0.9rem;">Login with your Minecraft Username to view Stats,
+                Purchase History, and Ban Status.</p>
+
+            <form class="auth-form" id="authForm">
+                <div class="auth-input-group">
+                    <input type="email" id="emailInput" placeholder="EMAIL ADDRESS" required>
+                </div>
+                <div class="auth-input-group">
+                    <input type="password" id="passwordInput" placeholder="PASSWORD" required>
+                </div>
+
+                <button type="button" class="mc-btn discord-btn" style="width:100%; margin:10px 0;"><i
+                        class="fab fa-discord"></i> LOGIN WITH DISCORD</button>
+
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <button type="button" class="mc-btn green-btn" id="loginBtn" style="width:50%;">LOGIN</button>
+                    <button type="button" class="mc-btn primary" id="registerBtn" style="width:50%;">REGISTER</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
