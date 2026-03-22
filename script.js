@@ -7,12 +7,12 @@
 
 // Firebase Configuration (Replace with your actual config from Firebase Console)
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB5cLsNHpbNQA97dLyWZ10Je-RVfQ-CW2s",
+  authDomain: "quantumnetwork-server-2121.firebaseapp.com",
+  projectId: "quantumnetwork-server-2121",
+  storageBucket: "quantumnetwork-server-2121.firebasestorage.app",
+  messagingSenderId: "206362335033",
+  appId: "1:206362335033:web:096d168caa5cf3a42bbae8"
 };
 
 // Initialize Firebase
